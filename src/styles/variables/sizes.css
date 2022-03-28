@@ -1,0 +1,14 @@
+:root {
+  --padding: 1rem;
+  --padding-responsive: var(--padding);
+  --page-padding: min(max(5vw, 2rem), 8rem);
+  --max-width: 1460px;
+  --font-size: 10px;
+  --baseline-rem: 1.6rem;
+  --baseline-rem-leading: 2.2rem;
+  --degularFont: 'degular-display', sans-serif;
+  --robotoFont: 'roboto', sans-serif;
+  --radius: 1rem;
+  --main-grid: repeat(12, 1fr);
+  --grid-item-size: calc((min(1280px, 90vw) - 8rem) / 4);
+}

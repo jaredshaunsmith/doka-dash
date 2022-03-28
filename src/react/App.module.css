@@ -1,0 +1,53 @@
+.App {
+}
+
+.App-logo {
+  height: 40vmin;
+  pointer-events: none;
+}
+
+.App-header {
+  background-color: #282c34;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+
+.App {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  display: flex;
+}
+
+video {
+  height: 100%;
+  width: 100%;
+}
+
+button {
+  width: 300px;
+  height: 200px;
+  z-index: 800;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+strong {
+  font-size: 30px;
+  letter-spacing: 3px;
+  font-weight: 300;
+}
+
+h2 {
+  font-size: 18px;
+  font-weight: 100;
+  margin: 0;
+}
