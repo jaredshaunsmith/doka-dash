@@ -3,7 +3,6 @@ import '../styles/styles.css'
 import styles from './App.module.css'
 import Loading from './views/Loading'
 import Dashboard from './views/Dashboard'
-import "@fontsource/montserrat"
 import JMuxer from 'jmuxer'
 
 const {ipcRenderer} = window;
@@ -30,7 +29,7 @@ const App = () => {
     const width = 800
 
     const [loading, setLoading] = useState(true)
-    const [mode, setMode] = useState('dashboard')
+    const [mode, setMode] = useState('carplay')
     const [iphoneConnected, setIphoneConnected] = useState(false)
     const [eventCords, setEventCords] = useState({ x: 0, y: 0 })
     const [mouseDown, setMouseDown] = useState(false)
@@ -67,35 +66,35 @@ const App = () => {
         }, 4000)
     }, [])
 
-    const handleMDown = (e) => {
-        let currentTargetRect = e.target.getBoundingClientRect();
-        let x = e.clientX - currentTargetRect.left
-        let y = e.clientY - currentTargetRect.top
-        x = x / width
-        y = y / height
-        setEventCords({ x, y })
-        setMouseDown(true)
-        ipcRenderer?.send('click', { type: 14, x, y })
-    }
+    // const handleMDown = (e) => {
+    //     let currentTargetRect = e.target.getBoundingClientRect();
+    //     let x = e.clientX - currentTargetRect.left
+    //     let y = e.clientY - currentTargetRect.top
+    //     x = x / width
+    //     y = y / height
+    //     setEventCords({ x, y })
+    //     setMouseDown(true)
+    //     ipcRenderer?.send('click', { type: 14, x, y })
+    // }
 
-    const handleMUp = (e) => {
-        let currentTargetRect = e.target.getBoundingClientRect();
-        let x = e.clientX - currentTargetRect.left
-        let y = e.clientY - currentTargetRect.top
-        x = x / width
-        y = y / height
-        setMouseDown(false)
-        ipcRenderer?.send('click', { type: 16, x, y })
-    }
+    // const handleMUp = (e) => {
+    //     let currentTargetRect = e.target.getBoundingClientRect();
+    //     let x = e.clientX - currentTargetRect.left
+    //     let y = e.clientY - currentTargetRect.top
+    //     x = x / width
+    //     y = y / height
+    //     setMouseDown(false)
+    //     ipcRenderer?.send('click', { type: 16, x, y })
+    // }
 
-    const handleMMove = (e) => {
-        let currentTargetRect = e.target.getBoundingClientRect();
-        let x = e.clientX - currentTargetRect.left
-        let y = e.clientY - currentTargetRect.top
-        x = x / width
-        y = y / height
-        ipcRenderer?.send('click', { type: 15, x, y })
-    }
+    // const handleMMove = (e) => {
+    //     let currentTargetRect = e.target.getBoundingClientRect();
+    //     let x = e.clientX - currentTargetRect.left
+    //     let y = e.clientY - currentTargetRect.top
+    //     x = x / width
+    //     y = y / height
+    //     ipcRenderer?.send('click', { type: 15, x, y })
+    // }
 
     const handleSingleTouch = (e) => {
         let currentTargetRect = e.target.getBoundingClientRect();
@@ -116,21 +115,27 @@ const App = () => {
         }
         switch (e.touches.length) {
             case 1: handleSingleTouch(e); break;
-            case 3: handleIntendToExitCarplay(e); break;
+            case 5: toggleCarplay(); break;
             default: console.log("Not supported"); break;
          }
     }
 
-    const handleIntendToExitCarplay = (e) => {
-        setMode('dashboard')
+    const toggleCarplay = () => {
+        if(iphoneConnected && mode !== 'carplay') {
+            setMode('carplay')
+        } else {
+            setMode('dashboard')
+        }
     }
 
     const handleUp = (e) => {
-        let x = eventCords.x
-        let y = eventCords.y
-        setMouseDown(false)
-        ipcRenderer?.send('click', { type: 16, x, y })
-        e.preventDefault()
+        if(mode==='carplay') {
+            let x = eventCords.x
+            let y = eventCords.y
+            setMouseDown(false)
+            ipcRenderer?.send('click', { type: 16, x, y })
+            e.preventDefault()
+        }
     }
 
 
@@ -178,18 +183,10 @@ const App = () => {
                         handleMove(e)
                     }
                 }}
-                onMouseDown={handleMDown}
-                onMouseUp={handleMUp}
-                onMouseMove={(e) => {
-                    if (mouseDown) {
-                        handleMMove(e)
-                    }
-                }}
             >
                 {mode === 'dashboard' && (
                     <>
                         <Dashboard times={{ currHours, currMinutes, currSeconds }} />
-                        <button onClick={() => setMode('carplay')} disabled={!iphoneConnected}>toggle carplay</button>
                     </>
                 )}
                 <video
