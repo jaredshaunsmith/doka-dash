@@ -1,6 +1,6 @@
 const hatMap = {
-    reverse: 11, // BCM7
-    illum: 23, // BCM13
+    reverse: 7, // BCM7
+    illum: 13, // BCM13
 }
 const isDev = require('electron-is-dev');
 const path = require('path');
@@ -9,6 +9,7 @@ const {app, BrowserWindow, ipcMain, ipcRenderer, globalShortcut} = require('elec
 const { Readable } = require('stream');
 if(!isDev) {
     var Gpio = require('onoff').Gpio;
+    Gpio.setmode(Gpio.BCM)
     var reverseButton = new Gpio(hatMap.reverse, 'in', 'both');
 }
 const WebSocket = require('ws');
@@ -52,6 +53,7 @@ function createWindow() {
     mainWindow = new BrowserWindow({
         width: 800, height: 480, kiosk: !isDev, webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
+            nodeIntegration: true,
             contextIsolation: false
         }
     });
