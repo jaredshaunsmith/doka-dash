@@ -33,6 +33,7 @@ const App = () => {
     const [iphoneConnected, setIphoneConnected] = useState(false)
     const [eventCords, setEventCords] = useState({ x: 0, y: 0 })
     const [mouseDown, setMouseDown] = useState(false)
+    const [reverse, setReverse] = useState('no reverse activity yet')
 
     useEffect(() => {
         const jmuxer = new JMuxer({
@@ -60,6 +61,11 @@ const App = () => {
             let video = buf.slice(4)
             jmuxer.feed({video: new Uint8Array(video), duration:duration})
         }
+
+        ipcRenderer?.on('reverseSwitch', (event, data) => {
+            alert(data)
+            setReverse(JSON.stringify(data))
+        })
 
         setTimeout(() => {
             setLoading(false)
@@ -189,6 +195,7 @@ const App = () => {
                         <Dashboard times={{ currHours, currMinutes, currSeconds }} />
                     </>
                 )}
+                <div style={{color: 'white', zIndex: 99, position: 'fixed', top: 200, left: 50}}>{reverse}</div>
                 <video
                     style={{display: iphoneConnected && mode === 'carplay' ? "block" : "none"}}
                     autoPlay
