@@ -1,16 +1,16 @@
-// const hatMap = {
-//     reverse: 11, // BCM7
-//     illum: 23, // BCM13
-// }
-// const isDev = require('electron-is-dev');
+const hatMap = {
+    reverse: 11, // BCM7
+    illum: 23, // BCM13
+}
+const isDev = require('electron-is-dev');
 const path = require('path');
 const url = require('url');
 const {app, BrowserWindow, ipcMain, ipcRenderer, globalShortcut} = require('electron');
 const { Readable } = require('stream');
-// if(!isDev) {
-    // var Gpio = require('onoff').Gpio;
-    // var reverseButton = new Gpio(hatMap.reverse, 'in', 'both');
-// }
+if(!isDev) {
+    var Gpio = require('onoff').Gpio;
+    var reverseButton = new Gpio(hatMap.reverse, 'in', 'both');
+}
 const WebSocket = require('ws');
 const mp4Reader = new Readable({
     read(size) {
@@ -50,7 +50,7 @@ function createWindow() {
     })
 
     mainWindow = new BrowserWindow({
-        width: 800, height: 480, kiosk: true, webPreferences: {
+        width: 800, height: 480, kiosk: !isDev, webPreferences: {
             preload: path.join(__dirname, 'preload.js'),
             contextIsolation: false
         }
@@ -90,11 +90,11 @@ function createWindow() {
             mainWindow.webContents.send('unplugged')
         }
     })
-    // if(!isDev) {
-        // reverseButton.watch((err, value) => { 
-        //     mainWindow.webContents.send('reverseSwitch', value)
-        // })
-    // }
+    if(!isDev) {
+        reverseButton.watch((err, value) => { 
+            mainWindow.webContents.send('reverseSwitch', value)
+        })
+    }
     // let sdf = 0
     // setInterval(() => {
     //     mainWindow.webContents.send('reverseSwitch', sdf)
