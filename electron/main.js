@@ -5,7 +5,7 @@ const {app, BrowserWindow, ipcMain, ipcRenderer, globalShortcut} = require('elec
 const { Readable } = require('stream');
 if(!isDev) {
     var Gpio = require('onoff').Gpio;
-    var reverseButton = new Gpio(4, 'in', 'both');
+    var reverseButton = new Gpio(11, 'in', 'both');
 }
 const WebSocket = require('ws');
 const mp4Reader = new Readable({
