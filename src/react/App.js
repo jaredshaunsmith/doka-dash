@@ -63,7 +63,6 @@ const App = () => {
         }
 
         ipcRenderer?.on('reverseSwitch', (event, data) => {
-            alert(data)
             setReverse(JSON.stringify(data))
         })
 
