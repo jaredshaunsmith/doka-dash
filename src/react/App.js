@@ -35,6 +35,8 @@ const App = () => {
     const [mouseDown, setMouseDown] = useState(false)
     const [reverse, setReverse] = useState('no reverse activity yet')
     const [illum, setIllum] = useState('no illum activity yet')
+    const [in1, setIn1] = useState('no in1 activity yet')
+    const [in2, setIn2] = useState('no in2 activity yet')
 
     useEffect(() => {
         const jmuxer = new JMuxer({
@@ -184,6 +186,10 @@ const App = () => {
         <div style={{height: '100%'}}>
             {loading && <Loading /> }
             <div
+                style={{
+                    '--color-surface': illum === 1 ? '#fff' : 'inherit',
+                    '--color-element': illum === 1 ? '#000' : 'inherit'
+                }}
                 className={styles.App}
                 onTouchStart={handleDown}
                 onTouchEnd={handleUp}
@@ -198,8 +204,10 @@ const App = () => {
                         <Dashboard times={{ currHours, currMinutes, currSeconds }} />
                     </>
                 )}
-                <div style={{color: 'white', zIndex: 99, position: 'fixed', top: 200, left: 50}}>{reverse}</div>
-                <div style={{color: 'white', zIndex: 99, position: 'fixed', top: 240, left: 50}}>{illum}</div>
+                <div style={{color: 'var(--color-element)', zIndex: 99, position: 'fixed', top: 200, left: 50}}>Reverse: {reverse}</div>
+                <div style={{color: 'var(--color-element)', zIndex: 99, position: 'fixed', top: 240, left: 50}}>Illumination: {illum}</div>
+                <div style={{color: 'var(--color-element)', zIndex: 99, position: 'fixed', top: 280, left: 50}}>In1: {in1}</div>
+                <div style={{color: 'var(--color-element)', zIndex: 99, position: 'fixed', top: 320, left: 50}}>In2: {in2}</div>
                 <video
                     style={{display: iphoneConnected && mode === 'carplay' ? "block" : "none"}}
                     autoPlay

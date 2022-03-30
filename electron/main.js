@@ -1,9 +1,8 @@
 const hatMap = {
-    reverse: 7, // BCM7 - this pin is giving me problems
-                // so for now I'm not using it just to 
-                // get a hello worl going from `illum`
-                // which is working with onoff correctly
-    illum: 13, // BCM13
+    reverse: 7, 
+    illum: 13,
+    in1: 14,
+    in2: 17
 }
 const isDev = require('electron-is-dev');
 const path = require('path');
@@ -14,6 +13,8 @@ if(!isDev) {
     var Gpio = require('onoff').Gpio;
     var reverseButton = new Gpio(hatMap.reverse, 'in', 'both');
     var illumButton = new Gpio(hatMap.illum, 'in', 'both');
+    var in1 = new Gpio(hatMap.in1, 'in', 'both');
+    var in2 = new Gpio(hatMap.in2, 'in', 'both');
 }
 const WebSocket = require('ws');
 const mp4Reader = new Readable({
@@ -101,6 +102,12 @@ function createWindow() {
         })
         illumButton.watch((err, value) => { 
             mainWindow.webContents.send('illumSwitch', value)
+        })
+        in1.watch((err, value) => { 
+            mainWindow.webContents.send('in1', value)
+        })
+        in2.watch((err, value) => { 
+            mainWindow.webContents.send('in2', value)
         })
     }
     // let sdf = 0
