@@ -5,7 +5,7 @@
     height: 120px;
     box-sizing: border-box;
     width: 100vw;
-    color: white;
+    color: var(--color-element);
   }
   .nav svg {
     position: relative;

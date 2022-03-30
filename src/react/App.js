@@ -187,8 +187,9 @@ const App = () => {
             {loading && <Loading /> }
             <div
                 style={{
-                    '--color-surface': illum ? '#fff' : 'inherit',
-                    '--color-element': illum ? '#000' : 'inherit'
+                    '--color-surface': illum !== 0 && illum !== false ? '#fff' : 'inherit',
+                    '--color-element': illum !== 0 && illum !== false ? '#000' : 'inherit',
+                    '--color-border': illum !== 0 && illum !== false ? '#000' : 'inherit',
                 }}
                 className={styles.App}
                 onTouchStart={handleDown}
