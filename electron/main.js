@@ -9,7 +9,6 @@ const {app, BrowserWindow, ipcMain, ipcRenderer, globalShortcut} = require('elec
 const { Readable } = require('stream');
 if(!isDev) {
     var Gpio = require('onoff').Gpio;
-    Gpio.setmode(Gpio.BCM)
     var reverseButton = new Gpio(hatMap.reverse, 'in', 'both');
 }
 const WebSocket = require('ws');
