@@ -34,7 +34,7 @@ const App = () => {
     const [eventCords, setEventCords] = useState({ x: 0, y: 0 })
     const [mouseDown, setMouseDown] = useState(false)
     const [reverse, setReverse] = useState('no reverse activity yet')
-    const [illum, setIllum] = useState('no illum activity yet')
+    const [illum, setIllum] = useState(false)
     const [in1, setIn1] = useState('no in1 activity yet')
     const [in2, setIn2] = useState('no in2 activity yet')
 
@@ -187,8 +187,8 @@ const App = () => {
             {loading && <Loading /> }
             <div
                 style={{
-                    '--color-surface': illum === 1 ? '#fff' : 'inherit',
-                    '--color-element': illum === 1 ? '#000' : 'inherit'
+                    '--color-surface': illum ? '#fff' : 'inherit',
+                    '--color-element': illum ? '#000' : 'inherit'
                 }}
                 className={styles.App}
                 onTouchStart={handleDown}
